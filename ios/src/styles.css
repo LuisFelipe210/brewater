@@ -36,7 +36,9 @@
   --f7-list-item-text-text-color: var(--ink);
 }
 
-.dark {
+/* .ios.dark: o Framework7 define o escuro com essa especificidade, então o nosso precisa igualar */
+.ios.dark,
+.ios .dark {
   --ground: #0b0907;
   --card: #1a1512;
   --ink: #f3f0ec;
@@ -51,6 +53,9 @@
   --bad: #ff8a72;
   --bad-soft: rgba(240, 100, 74, 0.2);
   --f7-theme-color: var(--copper);
+  --f7-page-bg-color: var(--ground);
+  --f7-list-strong-bg-color: var(--card);
+  --f7-block-strong-bg-color: var(--card);
 }
 
 ::selection { background: rgba(184, 95, 39, 0.28); }
@@ -106,11 +111,12 @@ input, textarea { caret-color: var(--copper); }
 .chart { display: block; width: 100%; height: auto; overflow: visible; }
 .chart-grid { stroke: rgba(243, 245, 242, 0.09); stroke-width: 1; }
 .chart-axis { stroke: rgba(243, 245, 242, 0.4); stroke-width: 1; }
-.chart-tick { fill: rgba(243, 245, 242, 0.5); font-size: 9.5px; font-family: var(--rounded); font-variant-numeric: tabular-nums; }
-.chart-axis-label { fill: var(--on-espresso-2); font-size: 10px; font-weight: 700; letter-spacing: 0.4px; }
+.chart.tap { cursor: pointer; }
+.chart-tick { fill: rgba(243, 245, 242, 0.55); font-size: 11px; font-family: var(--rounded); font-variant-numeric: tabular-nums; }
+.chart-axis-label { fill: var(--on-espresso-2); font-size: 11px; font-weight: 700; letter-spacing: 0.4px; }
 .chart-ok { fill: rgba(43, 179, 189, 0.08); stroke: rgba(43, 179, 189, 0.3); stroke-width: 1; }
 .chart-zone { fill: rgba(43, 179, 189, 0.3); stroke: var(--zone); stroke-width: 1; }
-.chart-zone-label { fill: #a6edf1; font-size: 10px; font-weight: 700; }
+.chart-zone-label { fill: #a6edf1; font-size: 11px; font-weight: 700; }
 .chart-dot { stroke: var(--espresso); stroke-width: 2; }
 .chart-halo { fill: none; stroke-width: 1.5; opacity: 0.55; }
 .chart-point { transition: opacity 0.3s; }
@@ -118,8 +124,9 @@ input, textarea { caret-color: var(--copper); }
 .chart-point.tap { cursor: pointer; }
 .chart-route-line { stroke: var(--crema); stroke-width: 2; stroke-linecap: round; }
 .chart-route-ghost { stroke: rgba(233, 185, 143, 0.35); stroke-width: 1; }
-.chart-target { fill: var(--espresso); stroke: var(--crema); stroke-width: 2.5; }
-.chart-off { fill: none; stroke: var(--on-espresso-2); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.chart-target { stroke: var(--crema); stroke-width: 2.5; }
+.chart-off { fill: var(--on-espresso-2); font-size: 11px; }
+.chart-dot.off { stroke-dasharray: 2 2; }
 .chart-via { fill: var(--espresso); stroke: rgba(233, 185, 143, 0.7); stroke-width: 1.5; }
 
 /* ---------- Nota ---------- */
@@ -174,6 +181,16 @@ input, textarea { caret-color: var(--copper); }
 /* ---------- Resultado ---------- */
 
 .result-hero { padding-top: 6px; }
+.navbar.espresso.title-hidden .title { opacity: 0; }
+.navbar.espresso .title { transition: opacity 0.2s; }
+/* No escuro o espresso quase some no fundo: uma linha fina segura a borda do bloco */
+.dark .hero { box-shadow: 0 0.5px 0 rgba(243, 240, 236, 0.16); }
+.preview-chart {
+  background: var(--espresso);
+  padding: 4px 10px 2px;
+  border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
+  overflow: hidden;
+}
 .hero-title {
   font-family: var(--rounded);
   font-weight: 800;
@@ -245,9 +262,11 @@ input, textarea { caret-color: var(--copper); }
 .mix-body { margin-top: 8px; }
 .mix-bar { display: flex; gap: 3px; height: 8px; }
 .mix-bar span { border-radius: 4px; }
-.mix-a { background: var(--copper); }
+/* Cobre fica só para ações: esta água em neutro, a parceira em azul-petróleo, a destilada em cinza claro */
+.mix-a { background: var(--ink-2); }
 .mix-b { background: #0b7a83; }
 .dark .mix-b { background: var(--zone); }
+.mix-b.destilada { background: var(--rule); box-shadow: inset 0 0 0 1px var(--ink-3); }
 .mix-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; font-size: 13px; color: var(--ink-2); }
 .mix-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .mix-legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
@@ -316,7 +335,7 @@ input, textarea { caret-color: var(--copper); }
 .values .from-ocr { background: var(--warn-soft); }
 .values .from-ocr .item-label::after { content: ' · da foto'; color: var(--warn); font-size: 13px; font-weight: 600; }
 
-.has-error .item-input .item-label { color: var(--bad); }
+.has-error li:first-child .item-label { color: var(--bad); }
 .has-error .item-input-error-message { font-size: 13px; line-height: 17px; }
 .has-error .item-input-invalid .item-input-wrap::after { background: var(--bad); }
 
@@ -324,6 +343,15 @@ input, textarea { caret-color: var(--copper); }
 .preview-title { font-weight: 600; color: var(--ink); }
 .preview-hint { font-size: 13px; line-height: 18px; color: var(--ink-2); margin-top: 2px; }
 
+/* Barra do formulário: o conteúdo some atrás de um vidro com a cor do fundo, como nas folhas do iOS */
+.editor .navbar .navbar-bg,
+.paste .navbar .navbar-bg {
+  display: block;
+  background: color-mix(in srgb, var(--ground) 94%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: 0 0.5px 0 var(--rule);
+}
 .navbar .link.save { font-weight: 600; color: var(--copper); }
 .navbar .link.disabled { opacity: 0.35; pointer-events: none; }
 

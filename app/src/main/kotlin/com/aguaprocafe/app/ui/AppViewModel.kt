@@ -56,6 +56,9 @@ class Draft(val original: WaterLabel?) {
     var ocrText by mutableStateOf("")
     var brandError by mutableStateOf(false)
 
+    /** Sobe a cada tentativa de salvar sem nome: a tela rola até a Marca e avisa */
+    var brandErrorTick by mutableStateOf(0)
+
     fun parsedValues(): Map<Field, Double> =
         values.mapNotNull { (f, s) -> parseNumber(s)?.let { f to it } }.toMap()
 }
@@ -195,6 +198,7 @@ class AppViewModel(app: Application, private val state: SavedStateHandle) : Andr
         val d = draft ?: return
         if (d.brand.isBlank()) {
             d.brandError = true
+            d.brandErrorTick++
             return
         }
         val water = WaterLabel(

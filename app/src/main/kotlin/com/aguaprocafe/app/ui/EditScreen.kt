@@ -2,6 +2,11 @@
 
 package com.aguaprocafe.app.ui
 
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,6 +67,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.aguaprocafe.app.R
+import com.aguaprocafe.app.domain.fmt
 import com.aguaprocafe.app.domain.Evaluator
 import com.aguaprocafe.app.domain.WaterProfile
 import com.aguaprocafe.app.domain.parseNumber
@@ -80,10 +86,24 @@ fun EditScreen(
     val preview = Evaluator.evaluate(WaterProfile.from(draft.parsedValues()))
     val scroll = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val fundo = LocalSuperficies.current.tela
+    val rolagem = rememberScrollState()
+    val marca = remember { FocusRequester() }
+    val avisos = remember { SnackbarHostState() }
+
+    // Salvou sem nome: sobe até a Marca, abre o teclado nela e diz o que falta
+    LaunchedEffect(draft.brandErrorTick) {
+        if (draft.brandErrorTick == 0) return@LaunchedEffect
+        scroll.state.heightOffset = 0f
+        rolagem.animateScrollTo(0)
+        marca.requestFocus()
+        avisos.currentSnackbarData?.dismiss()
+        avisos.showSnackbar("Falta o nome da água. Preencha a marca para salvar.")
+    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scroll.nestedScrollConnection),
         containerColor = fundo,
+        snackbarHost = { SnackbarHost(avisos) },
         topBar = {
             MediumFlexibleTopAppBar(
                 title = { Text(if (draft.original == null) "Nova água" else "Editar água") },
@@ -126,7 +146,7 @@ fun EditScreen(
                 .padding(pad)
                 .consumeWindowInsets(pad)
                 .imePadding()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rolagem)
                 .padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
             PhotoSection(draft, onCamera, onGallery, onRemovePhoto)
@@ -142,11 +162,12 @@ fun EditScreen(
                         },
                         label = { Text("Marca") },
                         isError = draft.brandError,
-                        supportingText = if (draft.brandError) ({ Text("Dê um nome para salvar") }) else null,
+                        supportingText = if (draft.brandError) ({ Text("Dê um nome para a água: é assim que ela aparece na sua lista.") }) else null,
+                        placeholder = { Text("Obrigatório, ex.: Serra Clara") },
                         singleLine = true,
                         shape = RoundedCornerShape(16.dp),
                         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Next),
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().focusRequester(marca),
                     )
                     OutlinedTextField(
                         value = draft.source,
@@ -156,6 +177,20 @@ fun EditScreen(
                         shape = RoundedCornerShape(16.dp),
                         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Next),
                         modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            }
+
+            val pg = preview.profile.gh
+            val pk = preview.profile.kh
+            if (pg != null && pk != null) {
+                SectionTitle("Prévia no gráfico")
+                ChartCard(caption = "GH ${fmt(pg, 0)} · KH ${fmt(pk, 0)}") {
+                    WaterChart(
+                        listOf(ChartPoint("previa", pg, pk, preview.verdict)),
+                        "Prévia no gráfico: GH ${fmt(pg, 0)}, KH ${fmt(pk, 0)}",
+                        focus = "previa",
+                        compact = true,
                     )
                 }
             }

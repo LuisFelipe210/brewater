@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-11-03T05:05:40.115Z",
+        "reason": "decision-round sketch, not shipped: throwaway mock under gitignored .impeccable/mocks"
+      }
+    ]
+  }
+}

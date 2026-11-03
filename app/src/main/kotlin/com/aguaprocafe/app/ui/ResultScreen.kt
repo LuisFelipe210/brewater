@@ -54,6 +54,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.aguaprocafe.app.domain.Evaluation
+import com.aguaprocafe.app.domain.Verdict
+import com.aguaprocafe.app.domain.WaterProfile
 import com.aguaprocafe.app.domain.Improvements
 import com.aguaprocafe.app.domain.Mistura
 import com.aguaprocafe.app.domain.Param
@@ -108,6 +110,33 @@ fun ResultScreen(
             ),
         ) {
             item { Hero(eval) }
+
+            val p = eval.profile
+            if (p.gh != null && p.kh != null) {
+                item {
+                    // A melhor correção vira a rota no gráfico, chegando com a cor da nota nova
+                    val melhor = listOfNotNull(mistura, diluicao).maxByOrNull { it.nota }
+                    val route = remember(melhor, p) {
+                        melhor?.let { m ->
+                            val outra = m.parceira?.let { WaterProfile.from(it.values) }
+                            val r = p.mix(outra, m.fracao)
+                            ChartRoute(r.gh!!, r.kh!!, veredito(m.nota), outra?.gh, outra?.kh)
+                        }
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    ChartCard(
+                        caption = "GH ${fmt(p.gh, 0)} · KH ${fmt(p.kh, 0)}",
+                        highlight = melhor?.let { rotaTexto(it, eval.score ?: it.notaAntes) },
+                    ) {
+                        WaterChart(
+                            listOf(ChartPoint(water.id, p.gh, p.kh, eval.verdict)),
+                            "${water.brand} no gráfico: GH ${fmt(p.gh, 0)}, KH ${fmt(p.kh, 0)}",
+                            focus = water.id,
+                            route = route,
+                        )
+                    }
+                }
+            }
 
             if (eval.results.isNotEmpty()) {
                 item { SectionTitle("Parâmetros") }
@@ -374,4 +403,17 @@ private fun CriteriosSegment() {
             }
         }
     }
+}
+
+private fun veredito(nota: Int) = when {
+    nota >= 85 -> Verdict.EXCELENTE
+    nota >= 70 -> Verdict.BOA
+    nota >= 50 -> Verdict.REGULAR
+    else -> Verdict.RUIM
+}
+
+private fun rotaTexto(m: Mistura, antes: Int): String {
+    val pct = m.percentual
+    return m.parceira?.let { "Misturando $pct% dela com ${100 - pct}% de ${it.brand}, a nota vai de $antes para ${m.nota}" }
+        ?: "Com ${100 - pct}% de água destilada, a nota vai de $antes para ${m.nota}"
 }

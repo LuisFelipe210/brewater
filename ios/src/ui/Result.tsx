@@ -2,9 +2,9 @@ import {
   AccordionContent, Actions, ActionsButton, ActionsGroup, ActionsLabel, Block, BlockTitle, Link, List, ListButton, ListItem,
   Navbar, NavRight, Page,
 } from 'framework7-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  aceitavelTexto, type Evaluation, faixaTexto, message, PARAM_LIST, type ParamResult, STATUS_LABEL, VERDICTS,
+  aceitavelTexto, type Evaluation, faixaTexto, verdictOf, message, PARAM_LIST, type ParamResult, STATUS_LABEL, VERDICTS,
 } from '../domain/evaluator'
 import { fmt } from '../domain/format'
 import { melhorDiluicao, melhorMistura, type Mistura, percentual, precisaMineralizar } from '../domain/improvements'
@@ -45,6 +45,7 @@ function ResultPage({ water, e, all, router }: { water: WaterLabel; e: Evaluatio
     const r = mix(p, outra, melhor.fracao)
     return {
       to: { gh: r.gh!, kh: r.kh! },
+      verdict: verdictOf(melhor.nota),
       via: outra ? { gh: outra.gh!, kh: outra.kh! } : undefined,
       label: rotulo(melhor, e.score ?? melhor.notaAntes),
     }
@@ -52,16 +53,27 @@ function ResultPage({ water, e, all, router }: { water: WaterLabel; e: Evaluatio
 
   const v = VERDICTS[e.verdict]
 
+  // O nome aparece na barra só quando o título grande sai da tela, como no iOS
+  const titulo = useRef<HTMLHeadingElement>(null)
+  const [nomeNaBarra, setNomeNaBarra] = useState(false)
+  useEffect(() => {
+    const el = titulo.current
+    if (!el) return
+    const io = new IntersectionObserver(([en]) => setNomeNaBarra(!en.isIntersecting), { rootMargin: '-60px 0px 0px 0px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   return (
     <Page className="result">
-      <Navbar backLink="Águas" className="espresso" title={water.brand}>
+      <Navbar backLink="Águas" className={`espresso${nomeNaBarra ? '' : ' title-hidden'}`} title={water.brand}>
         <NavRight>
           <Link onClick={() => openEditor({ original: water })}>Editar</Link>
         </NavRight>
       </Navbar>
 
       <div className="hero result-hero">
-        <h1 className="hero-title">{water.brand}</h1>
+        <h1 className="hero-title" ref={titulo}>{water.brand}</h1>
         {water.source && <div className="hero-source">{water.source}</div>}
         <div className="verdict">
           <div className="verdict-score num" style={{ color: VERDICT[e.verdict].solid }}>{e.score ?? '–'}</div>
@@ -192,11 +204,11 @@ function MixItem({ m, brand, antes, onOpen }: { m: Mistura; brand: string; antes
       <div slot="footer" className="mix-body">
         <div className="mix-bar">
           <span style={{ flex: pct }} className="mix-a" />
-          <span style={{ flex: 100 - pct }} className="mix-b" />
+          <span style={{ flex: 100 - pct }} className={`mix-b${m.parceira ? '' : ' destilada'}`} />
         </div>
         <div className="mix-legend num">
           <span><i className="mix-a" />{pct}% {brand}</span>
-          <span><i className="mix-b" />{100 - pct}% {outra}</span>
+          <span><i className={`mix-b${m.parceira ? '' : ' destilada'}`} />{100 - pct}% {outra}</span>
         </div>
       </div>
     </ListItem>

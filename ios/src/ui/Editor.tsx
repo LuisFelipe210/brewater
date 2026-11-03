@@ -11,6 +11,7 @@ import { readLabel } from '../ocr/ocr'
 import { parse, parseText, type ParsedLabel } from '../ocr/parser'
 import { closeEditor, type Editing, save } from '../state'
 import { getPhoto } from '../store'
+import { Chart } from './Chart'
 import { ScoreTile } from './common'
 import { Paste } from './Paste'
 
@@ -217,6 +218,16 @@ export function Editor({ editing }: { editing: Editing }) {
               {preview.score == null && <div className="preview-hint">Preencha cálcio, magnésio e bicarbonato, ou GH e KH.</div>}
             </div>
           </li>
+          {preview.profile.gh != null && preview.profile.kh != null && (
+            <li className="preview-chart">
+              <Chart
+                compact
+                points={[{ id: 'previa', gh: preview.profile.gh, kh: preview.profile.kh, verdict: preview.verdict }]}
+                focus="previa"
+                label={`Prévia no gráfico: GH ${fmt(preview.profile.gh, 0)}, KH ${fmt(preview.profile.kh, 0)}`}
+              />
+            </li>
+          )}
         </List>
 
         {GROUP_LIST.map((g) => (

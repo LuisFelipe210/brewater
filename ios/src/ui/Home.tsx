@@ -2,8 +2,10 @@ import {
   Actions, ActionsButton, ActionsGroup, ActionsLabel, Block, Button, Icon, Link, List, ListItem, Navbar, NavRight, Page,
 } from 'framework7-react'
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { VERDICTS } from '../domain/evaluator'
+import { type Evaluation, VERDICTS } from '../domain/evaluator'
 import { fmt } from '../domain/format'
+import { melhorDiluicao, melhorMistura, percentual, precisaMineralizar } from '../domain/improvements'
+import type { WaterLabel } from '../model'
 import { clearChanged, openEditor, ranking, useApp } from '../state'
 import { pickPhoto } from './pick'
 import { Chart } from './Chart'
@@ -75,7 +77,7 @@ export function Home(props: { f7router?: { navigate: (url: string) => void } }) 
               data-id={w.id}
             >
               <ScoreTile slot="media" score={e.score} verdict={e.verdict} />
-              <div slot="footer">{VERDICTS[e.verdict].title}</div>
+              <div slot="footer">{resumo(w, e, waters)}</div>
               {e.profile.gh != null && e.profile.kh != null && (
                 <div slot="after" className="gh-kh num">
                   <span>GH {fmt(e.profile.gh, 0)}</span>
@@ -102,6 +104,20 @@ export function Home(props: { f7router?: { navigate: (url: string) => void } }) 
       </Actions>
     </Page>
   )
+}
+
+/** Veredito e, quando ela não é boa, o caminho mais curto para melhorar */
+function resumo(w: WaterLabel, e: Evaluation, todas: WaterLabel[]) {
+  const titulo = VERDICTS[e.verdict].title
+  if (e.verdict === 'EXCELENTE' || e.verdict === 'INSUFICIENTE') return titulo
+  const m = [melhorMistura(w, e.profile, todas), melhorDiluicao(e.profile)].filter(Boolean).sort((a, b) => b!.nota - a!.nota)[0]
+  if (m) {
+    const pct = percentual(m)
+    return m.parceira
+      ? `${titulo} · com ${m.parceira.brand} vai a ${m.nota}`
+      : `${titulo} · com ${100 - pct}% de destilada vai a ${m.nota}`
+  }
+  return precisaMineralizar(e.profile) ? `${titulo} · falta mineral` : titulo
 }
 
 /**

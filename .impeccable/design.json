@@ -1,0 +1,791 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T05:19:27.482Z",
+  "title": "Design System: Brewater (iPhone)",
+  "extensions": {
+    "colorMeta": {
+      "espresso": {
+        "role": "neutral",
+        "displayName": "Espresso",
+        "canonical": "oklch(19.6% 0.023 47.5)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#2a2421",
+          "#4b3f3a",
+          "#6d5e56",
+          "#8f7e77",
+          "#afa29b",
+          "#d0c7c3",
+          "#f0eeec"
+        ]
+      },
+      "crema": {
+        "role": "primary",
+        "displayName": "Crema",
+        "canonical": "oklch(81.9% 0.079 62.6)",
+        "tonalRamp": [
+          "#0f0a06",
+          "#322111",
+          "#5a3a1c",
+          "#81572f",
+          "#a47850",
+          "#c29d7d",
+          "#dbc4b1",
+          "#f4ede7"
+        ]
+      },
+      "on-espresso": {
+        "role": "neutral",
+        "displayName": "On-Espresso Paper",
+        "canonical": "oklch(96.8% 0.004 134.8)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252524",
+          "#414240",
+          "#60625f",
+          "#818380",
+          "#a4a5a3",
+          "#c8c9c8",
+          "#eeeeee"
+        ]
+      },
+      "on-espresso-muted": {
+        "role": "neutral",
+        "displayName": "On-Espresso Muted",
+        "canonical": "oklch(96.8% 0.004 134.8)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252524",
+          "#414240",
+          "#60625f",
+          "#818380",
+          "#a4a5a3",
+          "#c8c9c8",
+          "#eeeeee"
+        ]
+      },
+      "zone": {
+        "role": "secondary",
+        "displayName": "Petrol Teal",
+        "canonical": "oklch(70.2% 0.111 202.6)",
+        "tonalRamp": [
+          "#040d0e",
+          "#002b2f",
+          "#014c51",
+          "#066f76",
+          "#05949d",
+          "#59b5bd",
+          "#a2d4d8",
+          "#e2f2f3"
+        ]
+      },
+      "zone-deep": {
+        "role": "secondary",
+        "displayName": "Deep Petrol Teal",
+        "canonical": "oklch(52.9% 0.088 204.1)",
+        "tonalRamp": [
+          "#050d0e",
+          "#052b2e",
+          "#014c52",
+          "#006f77",
+          "#32929b",
+          "#6eb2b9",
+          "#abd2d6",
+          "#e5f1f2"
+        ]
+      },
+      "zone-label": {
+        "role": "secondary",
+        "displayName": "Zone Caption Teal",
+        "canonical": "oklch(90.1% 0.071 200.4)",
+        "tonalRamp": [
+          "#060d0d",
+          "#0f2a2b",
+          "#134b4e",
+          "#246d71",
+          "#498f93",
+          "#7bb0b3",
+          "#b1d0d2",
+          "#e7f1f1"
+        ]
+      },
+      "copper": {
+        "role": "primary",
+        "displayName": "Copper",
+        "canonical": "oklch(58.2% 0.133 49.3)",
+        "tonalRamp": [
+          "#120905",
+          "#3c1a05",
+          "#6b2d00",
+          "#9a4501",
+          "#c06730",
+          "#db9168",
+          "#ecbea6",
+          "#faebe3"
+        ]
+      },
+      "copper-dark": {
+        "role": "primary",
+        "displayName": "Copper (dark)",
+        "canonical": "oklch(74.7% 0.114 57.4)",
+        "tonalRamp": [
+          "#110905",
+          "#381e07",
+          "#653301",
+          "#904e0c",
+          "#b56f37",
+          "#d0976c",
+          "#e5c1a8",
+          "#f8ece4"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Mineral Paper",
+        "canonical": "oklch(96.8% 0.004 134.8)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252524",
+          "#414240",
+          "#60625f",
+          "#818380",
+          "#a4a5a3",
+          "#c8c9c8",
+          "#eeeeee"
+        ]
+      },
+      "ground-dark": {
+        "role": "neutral",
+        "displayName": "Warm Near-Black (dark ground)",
+        "canonical": "oklch(10.9% 0.006 62)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ],
+        "note": "Shipped value from the Framework7 iOS dark cascade; styles.css declares #0b0907 but it is overridden."
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "card-dark": {
+        "role": "neutral",
+        "displayName": "Warm Card (dark)",
+        "canonical": "oklch(19.4% 0.009 56)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424243",
+          "#616162",
+          "#828283",
+          "#a5a5a6",
+          "#c9c9ca",
+          "#eeeeee"
+        ],
+        "note": "Shipped value from the Framework7 iOS dark cascade; styles.css declares #1a1512 but it is overridden."
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Espresso Ink",
+        "canonical": "oklch(19.6% 0.023 47.5)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#2a2421",
+          "#4b3f3a",
+          "#6d5e56",
+          "#8f7e77",
+          "#afa29b",
+          "#d0c7c3",
+          "#f0eeec"
+        ]
+      },
+      "ink-dark": {
+        "role": "neutral",
+        "displayName": "Paper Ink (dark)",
+        "canonical": "oklch(95.6% 0.006 75.4)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#262523",
+          "#43423f",
+          "#63615d",
+          "#84827e",
+          "#a7a5a2",
+          "#cac9c7",
+          "#efeeee"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "oklch(19.6% 0.023 47.5)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#2a2421",
+          "#4b3f3a",
+          "#6d5e56",
+          "#8f7e77",
+          "#afa29b",
+          "#d0c7c3",
+          "#f0eeec"
+        ]
+      },
+      "ink-muted-dark": {
+        "role": "neutral",
+        "displayName": "Muted Ink (dark)",
+        "canonical": "oklch(95.6% 0.006 75.4)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#262523",
+          "#43423f",
+          "#63615d",
+          "#84827e",
+          "#a7a5a2",
+          "#cac9c7",
+          "#efeeee"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Faint Ink",
+        "canonical": "oklch(19.6% 0.023 47.5)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#2a2421",
+          "#4b3f3a",
+          "#6d5e56",
+          "#8f7e77",
+          "#afa29b",
+          "#d0c7c3",
+          "#f0eeec"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline Rule",
+        "canonical": "oklch(19.6% 0.023 47.5)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#2a2421",
+          "#4b3f3a",
+          "#6d5e56",
+          "#8f7e77",
+          "#afa29b",
+          "#d0c7c3",
+          "#f0eeec"
+        ]
+      },
+      "rule-dark": {
+        "role": "neutral",
+        "displayName": "Hairline Rule (dark)",
+        "canonical": "oklch(95.6% 0.006 75.4)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#262523",
+          "#43423f",
+          "#63615d",
+          "#84827e",
+          "#a7a5a2",
+          "#cac9c7",
+          "#efeeee"
+        ]
+      },
+      "ok": {
+        "role": "tertiary",
+        "displayName": "Status Ink: OK",
+        "canonical": "oklch(51.4% 0.118 153.0)",
+        "tonalRamp": [
+          "#060d08",
+          "#0b2d18",
+          "#065028",
+          "#16743f",
+          "#41965f",
+          "#76b689",
+          "#afd4b8",
+          "#e6f2e9"
+        ]
+      },
+      "ok-dark": {
+        "role": "tertiary",
+        "displayName": "Status Ink: OK (dark)",
+        "canonical": "oklch(79.5% 0.149 155.4)",
+        "tonalRamp": [
+          "#040e07",
+          "#002e16",
+          "#01502c",
+          "#017542",
+          "#019b5a",
+          "#61bb85",
+          "#a5d7b6",
+          "#e3f3e8"
+        ]
+      },
+      "ok-soft": {
+        "role": "tertiary",
+        "displayName": "Status Tint: OK",
+        "canonical": "oklch(73.9% 0.171 152.1)",
+        "tonalRamp": [
+          "#040e06",
+          "#002e13",
+          "#005025",
+          "#01753a",
+          "#029c4f",
+          "#5abd7a",
+          "#a2d9b0",
+          "#e3f4e6"
+        ]
+      },
+      "warn": {
+        "role": "tertiary",
+        "displayName": "Status Ink: Warn",
+        "canonical": "oklch(50.8% 0.108 73.3)",
+        "tonalRamp": [
+          "#0f0a05",
+          "#342104",
+          "#5b3a01",
+          "#845602",
+          "#a9772e",
+          "#c69d67",
+          "#dec5a5",
+          "#f5ede3"
+        ]
+      },
+      "warn-dark": {
+        "role": "tertiary",
+        "displayName": "Status Ink: Warn (dark)",
+        "canonical": "oklch(84.4% 0.132 83.5)",
+        "tonalRamp": [
+          "#0f0a03",
+          "#322200",
+          "#563d00",
+          "#7d5b00",
+          "#a57a05",
+          "#c49f53",
+          "#ddc69c",
+          "#f5eee0"
+        ]
+      },
+      "warn-soft": {
+        "role": "tertiary",
+        "displayName": "Status Tint: Warn",
+        "canonical": "oklch(80.6% 0.147 79.0)",
+        "tonalRamp": [
+          "#100a03",
+          "#342100",
+          "#583c00",
+          "#805904",
+          "#aa7804",
+          "#cc9c47",
+          "#e2c596",
+          "#f7edde"
+        ]
+      },
+      "bad": {
+        "role": "tertiary",
+        "displayName": "Status Ink: Bad",
+        "canonical": "oklch(51.6% 0.158 33.3)",
+        "tonalRamp": [
+          "#140705",
+          "#42140a",
+          "#761e0b",
+          "#a8321a",
+          "#cf573e",
+          "#e98670",
+          "#f5b8aa",
+          "#fee9e4"
+        ]
+      },
+      "bad-dark": {
+        "role": "tertiary",
+        "displayName": "Status Ink: Bad (dark)",
+        "canonical": "oklch(75.7% 0.147 32.7)",
+        "tonalRamp": [
+          "#130806",
+          "#40160d",
+          "#732213",
+          "#a43823",
+          "#cb5b45",
+          "#e58975",
+          "#f3b9ad",
+          "#fdeae5"
+        ]
+      },
+      "bad-soft": {
+        "role": "tertiary",
+        "displayName": "Status Tint: Bad",
+        "canonical": "oklch(67.5% 0.178 32.5)",
+        "tonalRamp": [
+          "#150705",
+          "#451007",
+          "#7c1300",
+          "#b02509",
+          "#d84e35",
+          "#f0816a",
+          "#fbb6a7",
+          "#ffe9e4"
+        ]
+      },
+      "verdict-excelente": {
+        "role": "tertiary",
+        "displayName": "Verdict Solid: Excelente",
+        "canonical": "oklch(73.9% 0.171 152.1)",
+        "tonalRamp": [
+          "#040e06",
+          "#002e13",
+          "#005025",
+          "#01753a",
+          "#029c4f",
+          "#5abd7a",
+          "#a2d9b0",
+          "#e3f4e6"
+        ]
+      },
+      "verdict-boa": {
+        "role": "tertiary",
+        "displayName": "Verdict Solid: Boa",
+        "canonical": "oklch(80.5% 0.167 126.6)",
+        "tonalRamp": [
+          "#080d03",
+          "#1c2b00",
+          "#344b00",
+          "#4e6d02",
+          "#6a9201",
+          "#8fb452",
+          "#bcd39c",
+          "#eaf2e0"
+        ]
+      },
+      "verdict-regular": {
+        "role": "tertiary",
+        "displayName": "Verdict Solid: Regular",
+        "canonical": "oklch(80.6% 0.147 79.0)",
+        "tonalRamp": [
+          "#100a03",
+          "#342100",
+          "#583c00",
+          "#805904",
+          "#aa7804",
+          "#cc9c47",
+          "#e2c596",
+          "#f7edde"
+        ]
+      },
+      "verdict-ruim": {
+        "role": "tertiary",
+        "displayName": "Verdict Solid: Ruim",
+        "canonical": "oklch(67.5% 0.178 32.5)",
+        "tonalRamp": [
+          "#150705",
+          "#451007",
+          "#7c1300",
+          "#b02509",
+          "#d84e35",
+          "#f0816a",
+          "#fbb6a7",
+          "#ffe9e4"
+        ]
+      },
+      "verdict-insuficiente": {
+        "role": "tertiary",
+        "displayName": "Verdict Solid: Insuficiente",
+        "canonical": "oklch(71.6% 0.009 56.3)",
+        "tonalRamp": [
+          "#0c0b0b",
+          "#272523",
+          "#45413e",
+          "#65605c",
+          "#87817d",
+          "#a9a4a1",
+          "#cbc8c6",
+          "#efeeed"
+        ]
+      },
+      "boa-text": {
+        "role": "tertiary",
+        "displayName": "Status Ink: Boa",
+        "canonical": "oklch(51.0% 0.130 130.2)",
+        "tonalRamp": [
+          "#080d05",
+          "#1b2b07",
+          "#2f4c00",
+          "#476f06",
+          "#679135",
+          "#8fb26c",
+          "#bcd2a8",
+          "#eaf1e4"
+        ]
+      },
+      "boa-text-dark": {
+        "role": "tertiary",
+        "displayName": "Status Ink: Boa (dark)",
+        "canonical": "oklch(85.4% 0.147 125.6)",
+        "tonalRamp": [
+          "#090d04",
+          "#1d2a00",
+          "#364a00",
+          "#506d00",
+          "#6d9115",
+          "#93b25e",
+          "#bed2a1",
+          "#ebf1e2"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Verdict Score",
+        "purpose": "The big score on the Result slab, tinted with its verdict solid."
+      },
+      "large-title": {
+        "displayName": "Large Title",
+        "purpose": "Espresso navbar large title."
+      },
+      "headline": {
+        "displayName": "Water Name",
+        "purpose": "Water name on the Result slab."
+      },
+      "title": {
+        "displayName": "Empty-State Title",
+        "purpose": "First-run question."
+      },
+      "score": {
+        "displayName": "Score Tile",
+        "purpose": "Numerals inside score tiles."
+      },
+      "figure": {
+        "displayName": "Parameter Figure",
+        "purpose": "Parameter values; units drop to 12px SF Pro."
+      },
+      "verdict": {
+        "displayName": "Verdict Line",
+        "purpose": "Verdict title next to the big score."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "List titles and inputs (600 for names)."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Explanations, notes, slab captions."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Origins, ranges, pills, legends, hints."
+      },
+      "chart-label": {
+        "displayName": "Chart Axis Label",
+        "purpose": "Axis names on the slab."
+      },
+      "chart-tick": {
+        "displayName": "Chart Tick",
+        "purpose": "Rounded tabular axis ticks."
+      }
+    },
+    "shadows": [
+      {
+        "name": "glass-bar-button",
+        "value": "inset 0 0 0 0.5px rgba(243, 245, 242, 0.18)",
+        "purpose": "iOS 26 glass bar buttons on espresso, over a rgba(243,245,242,0.12) fill."
+      },
+      {
+        "name": "sheet-bar-glass",
+        "value": "backdrop-filter: blur(18px) saturate(160%); background: color-mix(in srgb, var(--ground) 94%, transparent); box-shadow: 0 0.5px 0 var(--rule)",
+        "purpose": "Editor and paste sheet navbars."
+      },
+      {
+        "name": "range-dot-lift",
+        "value": "0 1px 3px rgba(30, 18, 12, 0.35)",
+        "purpose": "Lifts the range value dot (with a 2.5px card ring)."
+      },
+      {
+        "name": "slab-edge-dark",
+        "value": "0 0.5px 0 rgba(243, 240, 236, 0.16)",
+        "purpose": "Dark mode only: hairline under the espresso slab."
+      },
+      {
+        "name": "photo-control-glass",
+        "value": "background: rgba(0,0,0,0.5); backdrop-filter: blur(12px)",
+        "purpose": "Remove-photo button over the label photo."
+      }
+    ],
+    "motion": [
+      {
+        "name": "route-slide",
+        "value": "1100ms after 350ms delay, ease-out quart (1-(1-t)^4)",
+        "purpose": "Fix-route target slides into place once; verdict fill fades in with progress."
+      },
+      {
+        "name": "reorder-flip",
+        "value": "520ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Rows slide to their new rank after an edit."
+      },
+      {
+        "name": "changed-row",
+        "value": "2.6s ease-out; copper 16% held to 55%, then fades",
+        "purpose": "Marks the just-edited water."
+      },
+      {
+        "name": "dot-dim",
+        "value": "opacity 0.3s",
+        "purpose": "Non-focused chart dots dim to 35%."
+      },
+      {
+        "name": "navbar-title",
+        "value": "opacity 0.2s",
+        "purpose": "Small title appears when the large name scrolls under the bar."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "end state, no animation",
+        "purpose": "Route jumps to end, FLIP skipped, changed row shows a static copper 12% wash."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "single column; chart viewBox 340×220 (compact 340×136) scales to width"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Copper pill for the single first-run capture action.",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9 4l-1.6 2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-2.4L15 4H9zm3 4.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9z\"/></svg>Fotografar rótulo</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border: 0; border-radius: 9999px; background: #b85f27; color: #fff; font: 600 17px -apple-system, system-ui, sans-serif; transition: opacity 0.2s, transform 0.2s; } .ds-btn-primary:hover { opacity: 0.9; } .ds-btn-primary:active { opacity: 0.7; transform: scale(0.98); } .ds-btn-primary:focus-visible { outline: 2px solid #b85f27; outline-offset: 3px; }"
+    },
+    {
+      "name": "Tonal Button",
+      "kind": "button",
+      "refersTo": "button-tonal",
+      "description": "Copper at 15% for secondary capture choices.",
+      "html": "<button class=\"ds-btn-tonal\">Escolher foto</button>",
+      "css": ".ds-btn-tonal { display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 24px; border: 0; border-radius: 9999px; background: rgba(184, 95, 39, 0.15); color: #b85f27; font: 600 17px -apple-system, system-ui, sans-serif; transition: background 0.2s; } .ds-btn-tonal:hover, .ds-btn-tonal:active { background: rgba(184, 95, 39, 0.25); } .ds-btn-tonal:focus-visible { outline: 2px solid #b85f27; outline-offset: 3px; }"
+    },
+    {
+      "name": "Espresso Navbar",
+      "kind": "nav",
+      "refersTo": "navbar-espresso",
+      "description": "Espresso large-title bar with crema actions in tinted glass buttons.",
+      "html": "<header class=\"ds-nav\"><div class=\"ds-nav-row\"><button class=\"ds-nav-btn\" aria-label=\"Voltar\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\"><path d=\"M15 5l-7 7 7 7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button><button class=\"ds-nav-btn ds-nav-cap\">Editar</button></div><h1 class=\"ds-nav-title\">Brewater</h1></header>",
+      "css": ".ds-nav { background: #1e120c; color: #f3f5f2; padding: 12px 16px 8px; } .ds-nav-row { display: flex; justify-content: space-between; } .ds-nav-btn { display: grid; place-items: center; min-width: 44px; height: 44px; padding: 0; border: 0; border-radius: 9999px; color: #e9b98f; background: rgba(243, 245, 242, 0.12); box-shadow: inset 0 0 0 0.5px rgba(243, 245, 242, 0.18); font: 400 17px -apple-system, system-ui, sans-serif; transition: background 0.2s; } .ds-nav-cap { padding: 0 16px; } .ds-nav-btn:hover { background: rgba(243, 245, 242, 0.2); } .ds-nav-btn:focus-visible { outline: 2px solid #e9b98f; outline-offset: 2px; } .ds-nav-title { margin: 18px 0 0; font: 800 34px ui-rounded, \"SF Pro Rounded\", -apple-system, system-ui, sans-serif; letter-spacing: 0.2px; }"
+    },
+    {
+      "name": "Espresso Chart Slab",
+      "kind": "custom",
+      "refersTo": "espresso-slab",
+      "description": "The SCA water chart on espresso: hairline grid, teal ideal zone, verdict dots, crema fix route.",
+      "html": "<div class=\"ds-slab\"><svg viewBox=\"0 0 340 220\" class=\"ds-chart\" role=\"img\" aria-label=\"Gráfico SCA\"><g stroke=\"rgba(243,245,242,0.09)\"><line x1=\"32\" x2=\"328\" y1=\"24\" y2=\"24\"/><line x1=\"32\" x2=\"328\" y1=\"65\" y2=\"65\"/><line x1=\"32\" x2=\"328\" y1=\"107\" y2=\"107\"/><line x1=\"32\" x2=\"328\" y1=\"148\" y2=\"148\"/><line x1=\"106\" x2=\"106\" y1=\"24\" y2=\"190\"/><line x1=\"180\" x2=\"180\" y1=\"24\" y2=\"190\"/><line x1=\"254\" x2=\"254\" y1=\"24\" y2=\"190\"/></g><g stroke=\"rgba(243,245,242,0.4)\"><line x1=\"32\" x2=\"328\" y1=\"190\" y2=\"190\"/><line x1=\"32\" x2=\"32\" y1=\"24\" y2=\"190\"/></g><rect x=\"69\" y=\"79\" width=\"207\" height=\"92\" rx=\"4\" fill=\"rgba(43,179,189,0.08)\" stroke=\"rgba(43,179,189,0.3)\"/><rect x=\"106\" y=\"107\" width=\"96\" height=\"41\" rx=\"4\" fill=\"rgba(43,179,189,0.3)\" stroke=\"#2bb3bd\"/><text x=\"106\" y=\"102\" fill=\"#a6edf1\" font-size=\"11\" font-weight=\"700\" font-family=\"-apple-system, system-ui\">ideal SCA</text><line x1=\"320\" y1=\"34\" x2=\"183\" y2=\"105\" stroke=\"#e9b98f\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"183\" cy=\"105\" r=\"8\" fill=\"#3cc872\" stroke=\"#e9b98f\" stroke-width=\"2.5\"/><circle cx=\"320\" cy=\"34\" r=\"13\" fill=\"none\" stroke=\"#f0644a\" stroke-width=\"1.5\" opacity=\"0.55\"/><circle cx=\"320\" cy=\"34\" r=\"8\" fill=\"#f0644a\" stroke=\"#1e120c\" stroke-width=\"2\" stroke-dasharray=\"2 2\"/><text x=\"328\" y=\"217\" text-anchor=\"end\" fill=\"rgba(243,245,242,0.62)\" font-size=\"11\" font-weight=\"700\" font-family=\"-apple-system, system-ui\">GH · dureza, mg/L CaCO₃</text><text x=\"32\" y=\"15\" fill=\"rgba(243,245,242,0.62)\" font-size=\"11\" font-weight=\"700\" font-family=\"-apple-system, system-ui\">KH · alcalinidade</text></svg><p class=\"ds-slab-cap\">GH 257 · KH 213<br><span>Misturando 10% dela com 90% de Serra Clara, a nota vai de 31 para 99</span></p></div>",
+      "css": ".ds-slab { background: #1e120c; color: #f3f5f2; padding: 4px 14px 18px; border-radius: 0 0 28px 28px; max-width: 390px; } .ds-chart { display: block; width: 100%; height: auto; overflow: visible; } .ds-slab-cap { margin: 10px 4px 0; font: 13px/18px -apple-system, system-ui, sans-serif; color: rgba(243, 245, 242, 0.62); font-variant-numeric: tabular-nums; } .ds-slab-cap span { color: #e9b98f; font-weight: 600; } .ds-slab:focus-within { outline: 2px solid #e9b98f; }"
+    },
+    {
+      "name": "Score Tile",
+      "kind": "chip",
+      "refersTo": "score-tile-excelente",
+      "description": "46px rounded square with the heavy rounded score on its verdict tint.",
+      "html": "<div class=\"ds-tiles\"><span class=\"ds-tile ds-ok\">100</span><span class=\"ds-tile ds-boa\">74</span><span class=\"ds-tile ds-warn\">58</span><span class=\"ds-tile ds-bad\">31</span><span class=\"ds-tile ds-none\">–</span></div>",
+      "css": ".ds-tiles { display: flex; gap: 10px; } .ds-tile { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font: 800 20px ui-rounded, \"SF Pro Rounded\", -apple-system, system-ui, sans-serif; letter-spacing: -0.3px; font-variant-numeric: tabular-nums; transition: transform 0.2s; } .ds-tile:hover { transform: scale(1.04); } .ds-ok { background: rgba(60, 200, 114, 0.16); color: #1f7a45; } .ds-boa { background: rgba(163, 210, 78, 0.22); color: #4c7410; } .ds-warn { background: rgba(242, 179, 61, 0.22); color: #8a5a00; } .ds-bad { background: rgba(240, 100, 74, 0.16); color: #b03a22; } .ds-none { background: rgba(30, 18, 12, 0.12); color: rgba(30, 18, 12, 0.62); }"
+    },
+    {
+      "name": "Water List Row",
+      "kind": "card",
+      "refersTo": "list-inset",
+      "description": "Inset list row: score tile, name, verdict summary, GH/KH stack, chevron.",
+      "html": "<ul class=\"ds-list\"><li class=\"ds-row\" tabindex=\"0\"><span class=\"ds-tile2\">87</span><span class=\"ds-row-main\"><b>Bica do Vale</b><small>Excelente para café especial</small></span><span class=\"ds-ghkh\">GH 38<br>KH 32</span><svg width=\"10\" height=\"16\" viewBox=\"0 0 10 16\"><path d=\"M2 2l6 6-6 6\" fill=\"none\" stroke=\"rgba(30,18,12,0.36)\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg></li></ul>",
+      "css": ".ds-list { list-style: none; margin: 0 16px; padding: 0; background: #fff; border-radius: 14px; overflow: hidden; font-family: -apple-system, system-ui, sans-serif; color: #1e120c; } .ds-row { display: flex; align-items: center; gap: 16px; padding: 10px 16px; transition: background 0.2s; } .ds-row:hover, .ds-row:focus-visible { background: rgba(30, 18, 12, 0.05); outline: none; } .ds-tile2 { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: rgba(60, 200, 114, 0.16); color: #1f7a45; font: 800 20px ui-rounded, \"SF Pro Rounded\", -apple-system, system-ui, sans-serif; font-variant-numeric: tabular-nums; } .ds-row-main { flex: 1; display: grid; } .ds-row-main b { font-weight: 600; font-size: 17px; } .ds-row-main small { font-size: 14px; color: rgba(30, 18, 12, 0.62); } .ds-ghkh { font-size: 12px; line-height: 15px; text-align: right; color: rgba(30, 18, 12, 0.62); font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Parameter Row with Range Bar",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Value, origin, teal ideal range, status dot and pill, explanation.",
+      "html": "<div class=\"ds-param\"><div class=\"ds-ptop\"><span class=\"ds-pname\">Alcalinidade (KH)</span><span class=\"ds-pval\">213,3<small> mg/L CaCO₃</small></span></div><div class=\"ds-porig\">Bicarbonato 260 × 0,82</div><div class=\"ds-range\"><i class=\"ds-track\"></i><i class=\"ds-ok\" style=\"left:9%;width:26%\"></i><i class=\"ds-ideal\" style=\"left:13%;width:13%\"></i><i class=\"ds-dot\" style=\"left:93%\"></i></div><div class=\"ds-pmeta\"><span class=\"ds-pill\">Alto demais</span><span>ideal 30–60</span></div></div>",
+      "css": ".ds-param { background: #fff; padding: 14px 16px; border-radius: 14px; font-family: -apple-system, system-ui, sans-serif; color: #1e120c; } .ds-ptop { display: flex; align-items: baseline; gap: 8px; } .ds-pname { flex: 1; font-weight: 600; } .ds-pval { font: 700 20px ui-rounded, \"SF Pro Rounded\", -apple-system, system-ui, sans-serif; font-variant-numeric: tabular-nums; } .ds-pval small { font: 400 12px -apple-system, system-ui, sans-serif; color: rgba(30, 18, 12, 0.62); } .ds-porig { font-size: 13px; color: rgba(30, 18, 12, 0.62); margin-top: 2px; } .ds-range { position: relative; height: 18px; margin-top: 10px; } .ds-range i { position: absolute; display: block; } .ds-track { left: 0; right: 0; top: 8px; height: 2px; background: rgba(30, 18, 12, 0.12); } .ds-ok { top: 8px; height: 2px; background: rgba(43, 179, 189, 0.35); } .ds-ideal { top: 6px; height: 6px; border-radius: 3px; background: #0b7a83; } .ds-dot { top: 2px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: #e5543a; border: 2.5px solid #fff; box-sizing: border-box; box-shadow: 0 1px 3px rgba(30, 18, 12, 0.35); transition: left 0.3s; } .ds-pmeta { display: flex; justify-content: space-between; margin: 8px 0 0; font-size: 13px; color: rgba(30, 18, 12, 0.62); } .ds-pill { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; color: #b03a22; } .ds-pill::before { content: \"\"; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }"
+    },
+    {
+      "name": "Value Input Row",
+      "kind": "input",
+      "refersTo": "input-value",
+      "description": "Settings-style row: label left, tabular number right; from-photo rows tinted warn until reviewed.",
+      "html": "<div class=\"ds-fields\"><label class=\"ds-field\"><span>Bicarbonato</span><input value=\"61,3\" inputmode=\"decimal\"></label><label class=\"ds-field ds-photo\"><span>Cálcio<em> · da foto</em></span><input value=\"15,4\" inputmode=\"decimal\"></label></div>",
+      "css": ".ds-fields { background: #fff; border-radius: 14px; overflow: hidden; font-family: -apple-system, system-ui, sans-serif; } .ds-field { display: flex; align-items: center; padding: 12px 16px; font-size: 17px; color: #1e120c; } .ds-field + .ds-field { box-shadow: inset 16px 0.5px 0 0 #fff, inset 0 0.5px 0 0 rgba(30, 18, 12, 0.12); } .ds-field span { flex: 1; } .ds-field em { font-style: normal; font-size: 13px; font-weight: 600; color: #8a5a00; } .ds-field input { width: 34%; border: 0; background: transparent; text-align: right; font: inherit; font-variant-numeric: tabular-nums; color: rgba(30, 18, 12, 0.62); caret-color: #b85f27; } .ds-field input:focus { outline: none; color: #1e120c; } .ds-field:focus-within { background: rgba(30, 18, 12, 0.03); } .ds-photo { background: rgba(242, 179, 61, 0.22); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Water Chart on the Bar",
+    "overview": "Brewater's iPhone app is native iOS with a coffee voice. Framework7 in the iOS theme supplies the structure: large-title navbars, inset grouped lists, push sheets, action sheets, swipe-back and the iOS 26 glass bar buttons. The identity sits on top of that structure and nowhere else. A dark espresso slab carries the SCA water chart (hardness on x, alkalinity on y) with 1px hairline grid lines and a petrol-teal ideal zone, and every water is a dot on it. Below the slab the app is plain native: mineral-paper ground, white inset cards, SF Pro text.\n\nDensity is calm and one-handed. Each screen leads with a single big rounded number or the chart, then hands off to lists you read by scrolling. Color is semantic, not decorative. Copper means \"you can act here\", teal means \"the SCA ideal\", and green, amber and red mean verdict or parameter status. Nothing is colored just to fill space.\n\nThe world rejects the Settings-style grouped list with a progress ring that the previous version shipped. The chart, not a ring, is how a score is shown in space.",
+    "keyCharacteristics": [
+      "An espresso slab with the hairline SCA chart at the top of Home, Result and the editor preview",
+      "Every water is a dot colored by its verdict; the ideal zone is the only teal shape",
+      "SF Rounded heavy for scores and titles, SF Pro for everything else, tabular figures for every number",
+      "Copper (crema on espresso) is reserved for actions and the fix route",
+      "Below the slab the screen is native iOS inset lists, with no custom chrome"
+    ],
+    "rules": [
+      {
+        "name": "The Copper Is a Verb Rule",
+        "body": "Copper (and crema on espresso) appears only where a tap does something, or along the route that shows how to fix the water. Data series, decoration and status never use it. Even the blend bar keeps \"this water\" neutral so copper stays an action.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Teal Rule",
+        "body": "Teal means \"inside the SCA ideal\". It marks the zone, the ideal segment of a range, and the partner water that moves this one toward the zone. Anything that is not about the ideal does not get teal.",
+        "section": "colors"
+      },
+      {
+        "name": "The Solid vs Ink Rule",
+        "body": "Saturated verdict solids go on espresso (dots, the big score). Darker status inks go on paper (tiles, pills, numbers). Never put a solid as text on a white card.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every number is set in tabular figures: scores, GH/KH, values, percentages and chart ticks. Columns of numbers must not jitter as values change.",
+        "section": "typography"
+      },
+      {
+        "name": "The Rounded Numbers Rule",
+        "body": "Rounded heavy is for scores, numeric values and titles. Running text, list titles and labels stay in SF Pro.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Slab Rule",
+        "body": "The espresso slab never casts a shadow. It is separated from the body only by tone, its 28px bottom corners and, in dark mode, a hairline.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put the chart on the espresso slab at the top of any screen that is about a water's position, and plot every water as a verdict-colored dot.",
+      "Do keep copper (crema on espresso) for taps and the fix route only.",
+      "Do use teal only for the SCA ideal zone, ideal range segments and the partner-water series.",
+      "Do use verdict solids on espresso and status inks on paper.",
+      "Do set every number in tabular figures, and scores and values in SF Rounded heavy.",
+      "Do use native Framework7 iOS lists, sheets, action sheets and glass bar buttons below the slab.",
+      "Do honor reduced motion by showing the end state of every animation."
+    ],
+    "donts": [
+      "Don't go back to the Settings-style grouped list with a progress ring to show a score; the chart is the score's place.",
+      "Don't color data series or decoration in copper. Even \"this water\" in a blend bar stays neutral.",
+      "Don't put a saturated verdict solid as text on a white card; use its ink.",
+      "Don't rescale the chart to fit outliers; pin them at the edge with a dashed stroke.",
+      "Don't give the espresso slab a drop shadow."
+    ]
+  }
+}

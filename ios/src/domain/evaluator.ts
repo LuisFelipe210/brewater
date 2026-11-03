@@ -233,6 +233,9 @@ function observacoes(p: WaterProfile): string[] {
 /** Math.round arredonda -0,5 para cima; aqui só há notas positivas, então equivale ao roundToInt. */
 export const round = (v: number) => Math.round(v)
 
+export const verdictOf = (nota: number): Verdict =>
+  nota >= 85 ? 'EXCELENTE' : nota >= 70 ? 'BOA' : nota >= 50 ? 'REGULAR' : 'RUIM'
+
 export function evaluate(p: WaterProfile): Evaluation {
   const results = valores(p).map(([param, value]) => ({
     param, value, status: param.faixa.status(value), score: param.faixa.score(value),
@@ -241,6 +244,5 @@ export function evaluate(p: WaterProfile): Evaluation {
   const score = rawScore(p)
   if (score == null) return { score: null, verdict: 'INSUFICIENTE', results, notes, profile: p }
   const nota = round(score)
-  const verdict: Verdict = nota >= 85 ? 'EXCELENTE' : nota >= 70 ? 'BOA' : nota >= 50 ? 'REGULAR' : 'RUIM'
-  return { score: nota, verdict, results, notes, profile: p }
+  return { score: nota, verdict: verdictOf(nota), results, notes, profile: p }
 }

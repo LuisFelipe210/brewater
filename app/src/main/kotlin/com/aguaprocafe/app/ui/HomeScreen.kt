@@ -46,6 +46,7 @@ import androidx.compose.material3.ToggleFloatingActionButton
 import androidx.compose.material3.ToggleFloatingActionButtonDefaults.animateIcon
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.toShape
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -112,6 +113,19 @@ fun HomeScreen(
                         bottom = pad.calculateBottomPadding() + 120.dp,
                     ),
                 ) {
+                    item(key = "grafico") {
+                        val pontos = waters.mapNotNull { (w, e) ->
+                            val gh = e.profile.gh ?: return@mapNotNull null
+                            val kh = e.profile.kh ?: return@mapNotNull null
+                            ChartPoint(w.id, gh, kh, e.verdict)
+                        }
+                        ChartCard(
+                            caption = "${waters.size} ${if (waters.size == 1) "água" else "águas"} no gráfico da SCA. Toque num ponto para abrir.",
+                        ) {
+                            WaterChart(pontos, "Gráfico de dureza e alcalinidade com ${pontos.size} águas", onSelect = onOpen)
+                        }
+                        Spacer(Modifier.height(16.dp))
+                    }
                     itemsIndexed(waters, key = { _, it -> it.first.id }) { i, (w, e) ->
                         WaterItem(w, e, i, waters.size) { onOpen(w.id) }
                     }
@@ -119,12 +133,13 @@ fun HomeScreen(
             }
         }
 
-        if (menuAberto) {
-            // Toque fora fecha o menu
+        // Fundo escurece com o menu aberto, como no Google Drive; toque fora fecha
+        val escuro by animateFloatAsState(if (menuAberto) 0.6f else 0f, MaterialTheme.motionScheme.defaultEffectsSpec(), label = "fundo")
+        if (escuro > 0f) {
             Box(
                 Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.32f))
+                    .background(MaterialTheme.colorScheme.scrim.copy(alpha = escuro))
                     .clickable(remember { MutableInteractionSource() }, indication = null) { menuAberto = false },
             )
         }
