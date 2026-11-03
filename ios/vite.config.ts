@@ -1,4 +1,4 @@
-import preact from '@preact/preset-vite'
+import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig } from 'vite'
 
@@ -8,7 +8,7 @@ const base = process.env.BASE ?? '/brewater/'
 export default defineConfig({
   base,
   plugins: [
-    preact(),
+    react(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icons/*.png', 'icons/icon.svg'],
@@ -19,8 +19,8 @@ export default defineConfig({
         lang: 'pt-BR',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#F2F2F7',
-        theme_color: '#F2F2F7',
+        background_color: '#1E120C',
+        theme_color: '#1E120C',
         icons: [
           { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
@@ -29,7 +29,7 @@ export default defineConfig({
       },
       workbox: {
         // O OCR (Tesseract + modelo em português) também fica guardado: funciona sem internet
-        globPatterns: ['**/*.{js,css,html,png,svg}', 'ocr/*'],
+        globPatterns: ['**/*.{js,css,html,png,svg,woff2}', 'ocr/*'],
         maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
         cleanupOutdatedCaches: true,
       },

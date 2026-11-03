@@ -9,3 +9,8 @@ keystore.properties
 *.keystore
 .kotlin/
 .DS_Store
+
+# Design: só o que é durável vai para o git
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/decision-payload.json

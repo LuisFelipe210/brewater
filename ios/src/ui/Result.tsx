@@ -1,141 +1,213 @@
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import {
-  aceitavelTexto, type Evaluation, faixaTexto, message, PARAM_LIST, type ParamResult, VERDICTS,
+  AccordionContent, Actions, ActionsButton, ActionsGroup, ActionsLabel, Block, BlockTitle, Link, List, ListButton, ListItem,
+  Navbar, NavRight, Page,
+} from 'framework7-react'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  aceitavelTexto, type Evaluation, faixaTexto, message, PARAM_LIST, type ParamResult, STATUS_LABEL, VERDICTS,
 } from '../domain/evaluator'
 import { fmt } from '../domain/format'
 import { melhorDiluicao, melhorMistura, type Mistura, percentual, precisaMineralizar } from '../domain/improvements'
-import { TDS_SOURCE } from '../domain/profile'
+import { mix, profileFrom, TDS_SOURCE } from '../domain/profile'
 import { FIELD_ORDER, FIELDS, type WaterLabel } from '../model'
+import { openEditor, remove, useApp } from '../state'
 import { getPhoto } from '../store'
-import { ChevronRight, Info, Trash } from './icons'
-import { ActionSheet, NavBar, Pill, RangeBar, ScoreRing, Section, useScrolled, VERDICT_COLOR } from './parts'
+import { Chart, type ChartRoute } from './Chart'
+import { RangeBar, STATUS_CLS, VERDICT } from './common'
 
-export function Result(props: {
-  water: WaterLabel
-  eval: Evaluation
-  all: WaterLabel[]
-  onBack: () => void
-  onEdit: () => void
-  onDelete: () => void
-  onOpen: (id: string) => void
-}) {
-  const { water, eval: e } = props
-  const ref = useRef<HTMLDivElement>(null)
-  const scrolled = useScrolled(ref)
-  const [confirmDelete, setConfirmDelete] = useState(false)
-  const [criterios, setCriterios] = useState(false)
+interface Router { back: () => void; navigate: (url: string) => void }
+
+export function Result(props: { id: string; f7router: Router }) {
+  const waters = useApp((s) => s.waters)
+  const evals = useApp((s) => s.evals)
+  const water = waters.find((w) => w.id === props.id)
+  const e = water && evals.get(water.id)
+  // Excluída: a página ainda existe durante a animação de volta
+  if (!water || !e) return <Page><Navbar backLink="Águas" className="espresso" /></Page>
+  return <ResultPage water={water} e={e} all={waters} router={props.f7router} />
+}
+
+function ResultPage({ water, e, all, router }: { water: WaterLabel; e: Evaluation; all: WaterLabel[]; router: Router }) {
+  const [confirm, setConfirm] = useState(false)
   const photo = usePhotoUrl(water.photoId)
-
   const diluicao = useMemo(() => melhorDiluicao(e.profile), [e])
-  const mistura = useMemo(() => melhorMistura(water, e.profile, props.all), [e, props.all])
+  const mistura = useMemo(() => melhorMistura(water, e.profile, all), [e, all])
   const mineralizar = precisaMineralizar(e.profile) && !mistura
   const campos = FIELD_ORDER.filter((f) => water.values[f] != null)
+  const p = e.profile
+  const noGrafico = p.gh != null && p.kh != null
+
+  // A melhor correção vira a rota no gráfico
+  const melhor = [mistura, diluicao].filter(Boolean).sort((a, b) => b!.nota - a!.nota)[0] ?? null
+  const route: ChartRoute | undefined = useMemo(() => {
+    if (!melhor || !noGrafico) return undefined
+    const outra = melhor.parceira ? profileFrom(melhor.parceira.values) : null
+    const r = mix(p, outra, melhor.fracao)
+    return {
+      to: { gh: r.gh!, kh: r.kh! },
+      via: outra ? { gh: outra.gh!, kh: outra.kh! } : undefined,
+      label: rotulo(melhor, e.score ?? melhor.notaAntes),
+    }
+  }, [melhor, p])
+
+  const v = VERDICTS[e.verdict]
 
   return (
-    <div ref={ref} style={{ height: '100%', overflowY: 'auto' }}>
-      <NavBar
-        title={water.brand}
-        scrolled={scrolled}
-        back={{ label: 'Águas', onClick: props.onBack }}
-        right={<button class="bar-btn" onClick={props.onEdit}>Editar</button>}
-      />
-      <h1 class="large-title">{water.brand}</h1>
-      {water.source && <div class="large-sub">{water.source}</div>}
+    <Page className="result">
+      <Navbar backLink="Águas" className="espresso" title={water.brand}>
+        <NavRight>
+          <Link onClick={() => openEditor({ original: water })}>Editar</Link>
+        </NavRight>
+      </Navbar>
 
-      <Section top={20}>
-          <div class="hero">
-            <ScoreRing score={e.score} verdict={e.verdict} />
-            <h2 style={{ color: e.score == null ? undefined : VERDICT_COLOR[e.verdict] }}>{VERDICTS[e.verdict].title}</h2>
-            <p>{VERDICTS[e.verdict].description}</p>
+      <div className="hero result-hero">
+        <h1 className="hero-title">{water.brand}</h1>
+        {water.source && <div className="hero-source">{water.source}</div>}
+        <div className="verdict">
+          <div className="verdict-score num" style={{ color: VERDICT[e.verdict].solid }}>{e.score ?? '–'}</div>
+          <div>
+            <div className="verdict-title">{v.title}</div>
+            <div className="verdict-desc">{v.description}</div>
           </div>
-      </Section>
-
-      {e.results.length > 0 && (
-        <Section header="Parâmetros">
-          {e.results.map((r) => <ParamCell r={r} e={e} key={r.param.key} />)}
-        </Section>
-      )}
+        </div>
+        {noGrafico ? (
+          <>
+            <Chart
+              points={[{ id: water.id, gh: p.gh!, kh: p.kh!, verdict: e.verdict }]}
+              focus={water.id}
+              route={route}
+              label={`${water.brand} no gráfico: GH ${fmt(p.gh!, 0)}, KH ${fmt(p.kh!, 0)}`}
+            />
+            <p className="hero-caption num">
+              GH {fmt(p.gh!, 0)} · KH {fmt(p.kh!, 0)}
+              {route && <><br /><span className="route-caption">{route.label}</span></>}
+            </p>
+          </>
+        ) : (
+          <p className="hero-caption">Sem dureza e alcalinidade não dá para pôr no gráfico. Edite e preencha cálcio, magnésio e bicarbonato.</p>
+        )}
+      </div>
 
       {(diluicao || mistura || mineralizar) && (
-        <Section header="Como melhorar">
-          {diluicao && <MixCell m={diluicao} brand={water.brand} onOpen={props.onOpen} />}
-          {mistura && <MixCell m={mistura} brand={water.brand} onOpen={props.onOpen} />}
-          {mineralizar && (
-            <div class="cell">
-              <div class="mix-title">Falta mineral</div>
-              <div class="param-msg" style={{ marginTop: 4 }}>
-                Diluir não resolve: ela já é leve demais. Misture com uma água mais mineralizada (cadastre outras
-                marcas que eu calculo a melhor proporção) ou use concentrados de minerais para café.
-              </div>
-            </div>
-          )}
-        </Section>
+        <>
+          <BlockTitle>Como melhorar</BlockTitle>
+          <List strong inset dividers>
+            {mistura && <MixItem m={mistura} brand={water.brand} antes={e.score ?? mistura.notaAntes} onOpen={(id) => router.navigate(`/agua/${id}/`)} />}
+            {diluicao && <MixItem m={diluicao} brand={water.brand} antes={e.score ?? diluicao.notaAntes} />}
+            {mineralizar && (
+              <ListItem title="Falta mineral" text="Diluir não resolve: ela já é leve demais. Misture com uma água mais mineralizada (cadastre outras marcas que eu calculo a proporção) ou use concentrado de minerais para café." />
+            )}
+          </List>
+        </>
+      )}
+
+      {e.results.length > 0 && (
+        <>
+          <BlockTitle>Parâmetros</BlockTitle>
+          <List strong inset dividers className="params">
+            {e.results.map((r) => <ParamItem key={r.param.key} r={r} e={e} />)}
+          </List>
+        </>
       )}
 
       {e.notes.length > 0 && (
-        <Section header="Observações">
-          {e.notes.map((n) => (
-            <div class="cell note" key={n}><Info />{n}</div>
-          ))}
-        </Section>
+        <>
+          <BlockTitle>Observações</BlockTitle>
+          <List strong inset dividers className="notes">
+            {e.notes.map((n) => <ListItem key={n} text={n} />)}
+          </List>
+        </>
       )}
 
-      <Section header="Dados do rótulo">
-        {photo && <img class="photo" src={photo} alt="Foto do rótulo" />}
+      <BlockTitle>Dados do rótulo</BlockTitle>
+      <List strong inset dividers>
+        {photo && (
+          <li className="label-photo">
+            <img src={photo} alt="Foto do rótulo" />
+          </li>
+        )}
         {campos.map((f) => (
-          <div class="row" key={f}>
-            <div class="row-main">{FIELDS[f].label}</div>
-            <div class="row-value">{fmt(water.values[f]!, 3)}{FIELDS[f].unit && ` ${FIELDS[f].unit}`}</div>
-          </div>
+          <ListItem key={f} title={FIELDS[f].label} after={`${fmt(water.values[f]!, 3)}${FIELDS[f].unit ? ` ${FIELDS[f].unit}` : ''}`} />
         ))}
-        {campos.length === 0 && !photo && <div class="row"><div class="row-main row-value">Nenhum valor preenchido</div></div>}
-        {water.notes && (
-          <div class="cell">
-            <div class="small" style={{ marginTop: 0 }}>Anotações</div>
-            <div style={{ marginTop: 2, whiteSpace: 'pre-wrap' }}>{water.notes}</div>
-          </div>
-        )}
-      </Section>
+        {campos.length === 0 && <ListItem title="Nenhum valor preenchido" />}
+        {water.notes && <ListItem header="Anotações" title={water.notes} className="multiline" />}
+      </List>
 
-      <Section>
-        <button class="row" onClick={() => setCriterios(!criterios)} aria-expanded={criterios}>
-          <div class="row-main">Como a nota é calculada</div>
-          <ChevronRight style={{ transform: criterios ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }} />
-        </button>
-        {criterios && (
-          <div class="cell criteria">
-            <p>
-              Faixas baseadas no padrão de água da SCA (Specialty Coffee Association) e no SCA Water Chart. Cada
-              parâmetro vale 100% dentro do ideal e cai aos poucos até a borda do aceitável. Se a dureza ou a
-              alcalinidade estiverem fora do aceitável, a nota para em “Regular”.
-            </p>
-            {PARAM_LIST.map((p) => (
-              <p class="small" key={p.key}>{p.title}: {faixaTexto(p)}, {aceitavelTexto(p)} · peso {p.weight}</p>
-            ))}
-            <p class="small">
-              Dureza (GH) = Ca × 2,497 + Mg × 4,118 · Alcalinidade (KH) = HCO₃⁻ × 0,82 · valores em mg/L como CaCO₃.
-            </p>
-          </div>
-        )}
-      </Section>
+      <List strong inset accordionList>
+        <ListItem accordionItem title="Como a nota é calculada">
+          <AccordionContent>
+            <Block className="criteria">
+              <p>
+                Faixas do padrão de água da SCA e do SCA Water Chart. Cada parâmetro vale 100% dentro do ideal e
+                cai aos poucos até a borda do aceitável. Se a dureza ou a alcalinidade estiverem fora do aceitável,
+                a nota para em “Regular”.
+              </p>
+              {PARAM_LIST.map((x) => (
+                <p key={x.key} className="small">{x.title}: {faixaTexto(x)}, {aceitavelTexto(x)} · peso {x.weight}</p>
+              ))}
+              <p className="small">GH = Ca × 2,497 + Mg × 4,118 · KH = HCO₃⁻ × 0,82 · em mg/L de CaCO₃.</p>
+            </Block>
+          </AccordionContent>
+        </ListItem>
+      </List>
 
-      <Section>
-        <button class="row destructive" onClick={() => setConfirmDelete(true)}>Excluir água</button>
-      </Section>
+      <List strong inset>
+        <ListButton color="red" onClick={() => setConfirm(true)}>Excluir água</ListButton>
+      </List>
 
-      {confirmDelete && (
-        <ActionSheet
-          title={`Excluir ${water.brand}?`}
-          message="Apaga o cadastro e a foto do rótulo deste iPhone."
-          actions={[{ label: 'Excluir água', icon: <Trash />, destructive: true, onClick: props.onDelete }]}
-          onClose={() => setConfirmDelete(false)}
-        />
-      )}
-    </div>
+      <Actions opened={confirm} onActionsClosed={() => setConfirm(false)}>
+        <ActionsGroup>
+          <ActionsLabel>Apaga {water.brand} e a foto do rótulo deste iPhone.</ActionsLabel>
+          <ActionsButton color="red" onClick={() => { router.back(); setTimeout(() => remove(water.id), 450) }}>
+            Excluir água
+          </ActionsButton>
+        </ActionsGroup>
+        <ActionsGroup>
+          <ActionsButton strong>Cancelar</ActionsButton>
+        </ActionsGroup>
+      </Actions>
+    </Page>
   )
 }
 
-function ParamCell({ r, e }: { r: ParamResult; e: Evaluation }) {
+function rotulo(m: Mistura, antes: number) {
+  const pct = percentual(m)
+  return m.parceira
+    ? `Misturando ${pct}% dela com ${100 - pct}% de ${m.parceira.brand}, a nota vai de ${antes} para ${m.nota}`
+    : `Com ${100 - pct}% de água destilada, a nota vai de ${antes} para ${m.nota}`
+}
+
+/** antes: a nota do topo (a das misturas ignora o pH, que não se mistura de forma linear) */
+function MixItem({ m, brand, antes, onOpen }: { m: Mistura; brand: string; antes: number; onOpen?: (id: string) => void }) {
+  const pct = percentual(m)
+  const outra = m.parceira?.brand ?? 'água destilada ou de osmose'
+  return (
+    <ListItem
+      link={m.parceira && onOpen ? '#' : undefined}
+      onClick={m.parceira && onOpen ? () => onOpen(m.parceira!.id) : undefined}
+      className="mix"
+    >
+      <div slot="title">{m.parceira ? `Misturar com ${m.parceira.brand}` : 'Diluir'}</div>
+      <div slot="after" className="mix-score num">{antes} → <b>{m.nota}</b></div>
+      <div slot="footer" className="mix-body">
+        <div className="mix-bar">
+          <span style={{ flex: pct }} className="mix-a" />
+          <span style={{ flex: 100 - pct }} className="mix-b" />
+        </div>
+        <div className="mix-legend num">
+          <span><i className="mix-a" />{pct}% {brand}</span>
+          <span><i className="mix-b" />{100 - pct}% {outra}</span>
+        </div>
+      </div>
+    </ListItem>
+  )
+}
+
+// O List do Framework7 só põe no <ul> o que ele reconhece como item pelo displayName
+MixItem.displayName = 'f7-list-item-mix'
+ParamItem.displayName = 'f7-list-item-param'
+
+function ParamItem({ r, e }: { r: ParamResult; e: Evaluation }) {
   const p = e.profile
   const origem =
     r.param.key === 'DUREZA' ? p.ghOrigem
@@ -143,53 +215,25 @@ function ParamCell({ r, e }: { r: ParamResult; e: Evaluation }) {
         : r.param.key === 'TDS' && p.tdsSource && p.tdsSource !== 'MEDIDO' ? TDS_SOURCE[p.tdsSource]
           : null
   return (
-    <div class="cell">
-      <div class="param-top">
-        <div class="param-name">{r.param.title}</div>
-        <div>
-          <span class="param-value">{fmt(r.value, r.param.key === 'PH' ? 2 : 1)}</span>
-          {r.param.unit && <span class="param-unit"> {r.param.unit}</span>}
-        </div>
+    <li className="param">
+      <div className="param-top">
+        <span className="param-name">{r.param.title}</span>
+        <span className="param-value num">
+          {fmt(r.value, r.param.key === 'PH' ? 2 : 1)}
+          {r.param.unit && <small> {r.param.unit}</small>}
+        </span>
       </div>
-      {origem && <div class="param-origin">{origem}</div>}
-      <RangeBar param={r.param} value={r.value} />
-      <div class="param-meta">
-        <Pill status={r.status} />
-        <span>{faixaTexto(r.param)}</span>
+      {origem && <div className="param-origin num">{origem}</div>}
+      <RangeBar param={r.param} value={r.value} status={r.status} />
+      <div className="param-meta">
+        <span className={`pill ${STATUS_CLS[r.status]}`}>{STATUS_LABEL[r.status]}</span>
+        <span className="num">{faixaTexto(r.param)}</span>
       </div>
-      <div class="param-msg">{message(r.param, r.status)}</div>
-    </div>
+      <p className="param-msg">{message(r.param, r.status)}</p>
+    </li>
   )
 }
 
-function MixCell({ m, brand, onOpen }: { m: Mistura; brand: string; onOpen: (id: string) => void }) {
-  const outra = m.parceira
-  const nome = outra?.brand ?? 'água destilada ou de osmose'
-  const pct = percentual(m)
-  const body = (
-    <>
-      <div class="mix-title">
-        <span>{outra ? `Misturar com ${outra.brand}` : 'Diluir'}</span>
-        {outra && <ChevronRight />}
-      </div>
-      <div class="mix-bar">
-        <span style={{ flex: pct, background: 'var(--tint)' }} />
-        <span style={{ flex: 100 - pct, background: 'var(--blue)' }} />
-      </div>
-      <div class="legend"><i style={{ background: 'var(--tint)' }} />{pct}% {brand}</div>
-      <div class="legend"><i style={{ background: 'var(--blue)' }} />{100 - pct}% {nome}</div>
-      <div class="mix-score">Nota estimada: {m.nota} (sozinha: {m.notaAntes})</div>
-      <div class="small">Estimativa sem considerar o pH, que muda pouco a nota.</div>
-    </>
-  )
-  return outra ? (
-    <button class="cell row tap" style={{ display: 'block', padding: '14px 16px' }} onClick={() => onOpen(outra.id)}>{body}</button>
-  ) : (
-    <div class="cell">{body}</div>
-  )
-}
-
-/** URL temporária da foto guardada no IndexedDB. */
 export function usePhotoUrl(id?: string) {
   const [url, setUrl] = useState<string | null>(null)
   useEffect(() => {
