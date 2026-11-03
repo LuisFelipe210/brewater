@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Gota d'água com a fenda de um grão de café -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#F4E6D8"
+        android:pathData="M54,30C54,30 36,51 36,63.5A18,18 0,0 0,72 63.5C72,51 54,30 54,30Z" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#6B4226"
+        android:strokeWidth="3.2"
+        android:strokeLineCap="round"
+        android:pathData="M56.5,49C50,55 58,63 51.5,73" />
+</vector>
