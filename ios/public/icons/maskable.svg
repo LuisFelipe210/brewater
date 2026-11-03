@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8A5A3B"/>
+      <stop offset="1" stop-color="#5A3520"/>
+    </linearGradient>
+    <linearGradient id="gota" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF8F1"/>
+      <stop offset="1" stop-color="#EAD6C2"/>
+    </linearGradient>
+  </defs>
+  <rect width="108" height="108" fill="url(#bg)"/>
+  <!-- Gota d'água com a fenda de um grão de café -->
+  <g transform="translate(54 54) scale(0.78) translate(-54 -54)"><path fill="url(#gota)" d="M54,22C54,22 31,49 31,65A23,23 0,0 0,77 65C77,49 54,22 54,22Z"/>
+  <path fill="none" stroke="#6B4226" stroke-width="4" stroke-linecap="round" d="M57.2,46C49,53.7 59.2,64 50.8,76.8"/>
+</g></svg>

@@ -6,6 +6,10 @@ App Android que avalia se uma água mineral serve para café especial (brew + wa
 - **Avaliação**: converte cálcio/magnésio em dureza (GH) e bicarbonato em alcalinidade (KH), em mg/L de CaCO₃, e compara com o padrão de água da SCA. Nota de 0 a 100 e explicação de cada parâmetro.
 - **Como melhorar**: calcula a melhor diluição com água destilada/osmose e a melhor mistura entre as águas cadastradas.
 
+## iPhone
+
+Versão PWA na pasta [`ios/`](ios/): abra https://luisfelipe210.github.io/brewater/ no Safari e adicione à Tela de Início.
+
 ## Build
 
 ```bash
